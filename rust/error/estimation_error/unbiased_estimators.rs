@@ -1,3 +1,5 @@
+use ndarray::Array2;
+use ndarray_stats::CorrelationExt;
 use rand::seq::IndexedRandom;
 
 fn main() {
@@ -40,6 +42,7 @@ fn main() {
     println!("Sample means: {means:?}");
     println!("Sample variances: {variances:?}");
 
+    // --- Method 1: Manual Pearson correlation (pure mathematical definition) ---
     let raw_means: Vec<f64> = (0..num_cols)
         .map(|col| {
             let sum: f64 = samples.iter().map(|row| f64::from(row[col])).sum();
@@ -79,8 +82,24 @@ fn main() {
         }
     }
 
-    println!("Correlation matrix:");
+    println!("\nCorrelation matrix (Method 1: Manual calculation):");
     for row in &corr_matrix {
         println!("{row:?}");
+    }
+
+    // --- Method 2: Vectorized Pearson correlation (via ndarray & ndarray-stats) ---
+    let flat: Vec<f64> = samples
+        .iter()
+        .flat_map(|row| row.iter().map(|&x| f64::from(x)))
+        .collect();
+    let arr = Array2::from_shape_vec((num_rows, num_cols), flat).unwrap();
+    // Transpose so that each of the 10 samples (columns) is treated as a random variable
+    let corr_ndarray = arr.t().pearson_correlation().unwrap();
+    let rounded_ndarray = corr_ndarray.mapv(|x| (x * 100.0).round() / 100.0);
+
+    println!("\nCorrelation matrix (Method 2: ndarray + ndarray-stats):");
+    for row in rounded_ndarray.rows() {
+        let row_vec: Vec<f64> = row.to_vec();
+        println!("{row_vec:?}");
     }
 }
