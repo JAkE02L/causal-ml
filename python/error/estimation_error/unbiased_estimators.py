@@ -14,6 +14,10 @@ def main() -> None:
     print("Sample means:", means)
     print("Sample variances:", variances)
 
+    corr_matrix = np.round(np.corrcoef(samples, rowvar=False), 2)
+    print("Correlation matrix:")
+    print(corr_matrix)
+
 
 if __name__ == "__main__":
     main()
