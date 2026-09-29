@@ -1,5 +1,7 @@
 use ndarray::Array2;
 use ndarray_stats::CorrelationExt;
+use rand::SeedableRng;
+use rand::rngs::StdRng;
 use rand::seq::IndexedRandom;
 
 fn main() {
@@ -7,7 +9,7 @@ fn main() {
     let num_rows = 5000;
     let num_cols = 10;
 
-    let mut rng = rand::rng();
+    let mut rng = StdRng::seed_from_u64(42);
     let mut samples = vec![vec![0; num_cols]; num_rows];
 
     for col in 0..num_cols {
