@@ -1,7 +1,7 @@
 [project]
 name = "causal-ml"
 version = "0.1.0"
-description = "Add your description here"
+description = "Causal Inference and Machine Learning experiments in Python"
 readme = "README.md"
 authors = [
     { name = "Jose Andres Enriquez", email = "jjandres1997@gmail.com" }

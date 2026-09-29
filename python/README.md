@@ -1,63 +1,63 @@
-# Ambiente de Python — Inferencia Causal & Machine Learning
+# Python Environment — Causal Inference & Machine Learning
 
-Este subdirectorio contiene las implementaciones en **Python** de los conceptos, algoritmos y experimentos de inferencia causal y aprendizaje automático, usando exclusivamente `uv` para la gestión de dependencias y entornos virtuales.
+This subfolder contains the **Python** implementations of causal inference and machine learning algorithms and experiments, managed exclusively with `uv` for dependency management and environment reproducibility.
 
 ---
 
-## 1. Requisitos y Herramientas
+## 1. Prerequisites & Tooling
 
-- **Gestor de entorno y paquetes:** `uv` (exclusivo).
-- **Versión de Python:** Python >= 3.14 (gestionado y descargado automáticamente por `uv`).
-- **Archivo de bloqueo:** `uv.lock` asegura que cualquier instalación sea 100% reproducible y exacta.
+- **Package and Environment Manager:** `uv` (exclusive).
+- **Python Version:** Python >= 3.14 (automatically downloaded and managed by `uv`).
+- **Lockfile:** `uv.lock` guarantees 100% reproducible and deterministic installs across machines.
 
-Si no tienes `uv` instalado en otro equipo:
+If you do not have `uv` installed on another machine:
 ```powershell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
-O en Linux/macOS:
+Or on Linux/macOS:
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 ---
 
-## 2. Configuración y Reproducibilidad
+## 2. Setup & Reproducibility
 
-El entorno virtual se sincroniza directamente desde el archivo `uv.lock`.
+The virtual environment is synced directly from `uv.lock`.
 
-### Sincronizar el entorno virtual exacto:
+### Sync the exact virtual environment:
 ```bash
 uv sync
 ```
-Esto creará o actualizará `.venv` con las versiones fijadas en el lockfile sin alterar las versiones resueltas.
+This creates or updates `.venv` matching the locked dependencies without altering resolved versions.
 
 ---
 
-## 3. Flujo de Trabajo
+## 3. Workflow
 
-Todos los comandos deben ejecutarse dentro de la carpeta `python/` (o especificando `--directory python`):
+Execute all commands inside the `python/` directory (or specify `--directory python`):
 
-- **Ejecutar un script dentro del entorno virtual:**
+- **Run a script inside the virtual environment:**
   ```bash
   uv run python src/causal_ml/__init__.py
   ```
-- **Abrir una sesión interactiva (REPL):**
+- **Open an interactive Python REPL:**
   ```bash
   uv run python
   ```
-- **Añadir una nueva dependencia (sólo bajo petición explícita):**
+- **Add a new dependency (strictly upon explicit request):**
   ```bash
-  uv add <nombre-paquete>
+  uv add <package-name>
   ```
-- **Eliminar una dependencia:**
+- **Remove a dependency:**
   ```bash
-  uv remove <nombre-paquete>
+  uv remove <package-name>
   ```
 
 ---
 
-## 4. Dependencias Actuales
+## 4. Current Dependencies
 
 - `numpy` (>= 2.5.3)
 
-*Nota: No se deben añadir dependencias adicionales sin solicitud explícita.*
+*Note: No additional dependencies may be installed without explicit approval.*

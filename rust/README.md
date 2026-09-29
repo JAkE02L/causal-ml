@@ -1,52 +1,52 @@
-# Ambiente de Rust — Inferencia Causal & Machine Learning
+# Rust Environment — Causal Inference & Machine Learning
 
-Este subdirectorio contiene las implementaciones en **Rust** de los conceptos, algoritmos y experimentos de inferencia causal y aprendizaje automático, diseñados como espejo exacto de las implementaciones en Python.
+This subfolder contains the **Rust** implementations of causal inference and machine learning algorithms and experiments, designed as an exact mirror of the Python implementations.
 
 ---
 
-## 1. Requisitos e Instalación de Rust
+## 1. Prerequisites & Toolchain Installation
 
-Rust se gestiona oficialmente a través de `rustup`, el instalador y gestor de toolchains de Rust.
+Rust is officially managed via `rustup`, the installer and toolchain manager for Rust.
 
-### En Windows (Recomendado)
+### On Windows (Recommended)
 
-1. **Requisito previo (C++ Build Tools):**
-   Rust en Windows utiliza por defecto la ABI MSVC, la cual requiere las herramientas de compilación de Microsoft C++.
-   - Descarga e instala **Visual Studio Build Tools**: [https://visualstudio.microsoft.com/visual-cpp-build-tools/](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
-   - Durante la instalación, marca la carga de trabajo: **"Desarrollo para el escritorio con C++"** (*Desktop development with C++*).
+1. **Prerequisite (C++ Build Tools):**
+   Rust on Windows uses the MSVC ABI by default, which requires Microsoft C++ build tools.
+   - Download and install **Visual Studio Build Tools**: [https://visualstudio.microsoft.com/visual-cpp-build-tools/](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+   - During installation, check the workload: **"Desktop development with C++"**.
 
-2. **Instalador de Rust (`rustup`):**
-   - Descarga `rustup-init.exe` desde [https://rustup.rs/](https://rustup.rs/).
-   - Ejecuta el instalador y selecciona la opción por defecto `1) Proceed with installation (default)`.
-   - Reinicia tu terminal (PowerShell o CMD) para que las variables de entorno se actualicen.
+2. **Rust Installer (`rustup`):**
+   - Download `rustup-init.exe` from [https://rustup.rs/](https://rustup.rs/).
+   - Run the installer and choose the default option `1) Proceed with installation (default)`.
+   - Restart your terminal (PowerShell or CMD) for environment variables to take effect.
 
-3. **Alternativa vía PowerShell (Winget):**
+3. **Alternative via PowerShell (Winget):**
    ```powershell
    winget install --id Rustlang.Rustup
    ```
 
-### En Linux y macOS
+### On Linux & macOS
 
-Ejecuta en tu terminal:
+Run in your terminal:
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
-Sigue las instrucciones en pantalla y recarga tu shell (`source $HOME/.cargo/env`).
+Follow the on-screen prompts and reload your shell (`source $HOME/.cargo/env`).
 
 ---
 
-## 2. Verificación de la Instalación
+## 2. Verifying the Installation
 
-Comprueba que el compilador y el gestor de paquetes estén disponibles:
+Verify that the compiler and package manager are available:
 
 ```bash
 rustc --version
 cargo --version
 ```
 
-### Actualización a la versión estable más reciente
+### Updating to the Latest Stable Version
 
-Para mantener Rust actualizado con la última versión estable:
+To keep Rust updated to the latest stable release:
 
 ```bash
 rustup update stable
@@ -55,41 +55,41 @@ rustup default stable
 
 ---
 
-## 3. Uso y Flujo de Trabajo con Cargo
+## 3. Workflow with Cargo
 
-Todos los comandos deben ejecutarse dentro de la carpeta `rust/`:
+Execute all commands inside the `rust/` directory:
 
-- **Compilar el proyecto:**
+- **Build the project:**
   ```bash
   cargo build
   ```
-- **Ejecutar el programa principal:**
+- **Run the main binary:**
   ```bash
   cargo run
   ```
-- **Verificación rápida de sintaxis y tipos (sin generar binario):**
+- **Fast type and syntax checking (without binary generation):**
   ```bash
   cargo check
   ```
-- **Ejecutar pruebas unitarias / de integración:**
+- **Run unit / integration tests:**
   ```bash
   cargo test
   ```
-- **Linter y análisis estático:**
+- **Linter and static analysis:**
   ```bash
   cargo clippy
   ```
-- **Formatear el código:**
+- **Format code:**
   ```bash
   cargo fmt
   ```
 
 ---
 
-## 4. Política de Dependencias
+## 4. Dependency Policy
 
-Para mantener el entorno reproducible y minimalista, **no se deben añadir crates adicionales a `Cargo.toml`** a menos que sea explícitamente solicitado.
-Cuando se requiera un nuevo crate, agrégalo usando:
+To keep the project clean, lightweight, and reproducible, **no external crates should be added to `Cargo.toml`** unless explicitly requested.
+When a new crate is needed and authorized, add it via:
 ```bash
-cargo add <nombre-del-crate>
+cargo add <crate-name>
 ```

@@ -1,64 +1,70 @@
-# Reglas y Directrices para Agentes de IA (`AGENTS.md`)
+# Agent Rules & Guidelines (`AGENTS.md`)
 
-Este archivo contiene las directrices operativas, restricciones y pautas de arquitectura que cualquier asistente o agente de IA (incluyendo Antigravity) debe seguir rigurosamente al trabajar en este repositorio.
-
----
-
-## 1. Principio Fundamental: Paridad 1:1 (Python ↔ Rust)
-
-- **Simetría de implementaciones:** Cada concepto, algoritmo, estimador causal o modelo de Machine Learning que se desarrolle en `python/` debe tener su contraparte equivalente en `rust/`, y viceversa.
-- **Estructura especular:** La organización de submódulos, nombres de funciones y pruebas debe ser análoga en la medida de lo idiomático de cada lenguaje.
-- **Validación numérica:** Cuando sea factible, los resultados numéricos de ambos entornos deben compararse con conjuntos de datos sintéticos o de referencia idénticos para garantizar coherencia en estimaciones causales (ATE, CATE, ITE, propensity scores, etc.).
+This file defines the operational guidelines, architecture constraints, and rules that any AI assistant or agent (including Antigravity) must strictly follow when working in this repository.
 
 ---
 
-## 2. Política Estricta de Dependencias
+## 1. Core Principle: 1:1 Parity (Python ↔ Rust)
 
-- **CERO dependencias anticipadas:** **NUNCA** agregues librerías, crates o paquetes a menos que el usuario lo solicite de manera explícita y directa.
-- **Entorno Python actual:**
-  - Solo `numpy` está permitido por ahora.
-  - Para agregar una dependencia (previa aprobación): `uv add <paquete>`.
-- **Entorno Rust actual:**
-  - Solo la biblioteca estándar (`std`) está permitida por ahora.
-  - Para agregar un crate (previa aprobación): `cargo add <crate>`.
+- **Implementation Symmetry:** Every concept, algorithm, causal estimator, or Machine Learning model developed in `python/` must have an equivalent counterpart in `rust/`, and vice versa.
+- **Mirrored Structure:** The organization of submodules, function names, and test suites must be analogous, adhering to the idiomatic conventions of each language.
+- **Numerical Validation:** Whenever feasible, numerical results from both environments should be validated against identical synthetic or benchmark datasets to ensure consistent causal estimates (ATE, CATE, ITE, propensity scores, etc.).
 
 ---
 
-## 3. Manejo de Entornos de Ejecución
+## 2. Language Policy
+
+- **Strict English in Repository:** All files, code comments, documentation (READMEs, design docs), docstrings, type annotations, and Git commit messages within this repository must be written in **English**, regardless of the conversation language used with the user.
+
+---
+
+## 3. Strict Dependency Policy
+
+- **ZERO Anticipated Dependencies:** **NEVER** install or add libraries, crates, or packages unless the user explicitly and directly requests it.
+- **Current Python Environment:**
+  - Only `numpy` is permitted for now.
+  - Adding a dependency (prior approval required): `uv add <package>`.
+- **Current Rust Environment:**
+  - Only the standard library (`std`) is permitted for now.
+  - Adding a crate (prior approval required): `cargo add <crate>`.
+
+---
+
+## 4. Execution Environment Rules
 
 ### Python
-- El único gestor autorizado es **`uv`**. No utilices comandos directos de `pip`, `conda`, `virtualenv` o `poetry`.
-- Para ejecutar cualquier script o herramienta en Python:
+- The only authorized package and environment manager is **`uv`**. Never execute raw `pip`, `conda`, `virtualenv`, or `poetry` commands.
+- Run any Python script or tool using:
   ```bash
-  uv run python <ruta-al-script>
+  uv run python <path-to-script>
   ```
-- Mantener `uv.lock` actualizado y bajo control de versiones.
+- Keep `uv.lock` up-to-date and tracked under version control.
 
 ### Rust
-- Todo el código debe compilar con la toolchain **estable más reciente** de Rust.
-- Utilizar los comandos estándar de Cargo:
-  - `cargo check`: Verificación rápida.
-  - `cargo run`: Ejecución de binarios / ejemplos.
-  - `cargo test`: Ejecución de pruebas.
-  - `cargo fmt --check`: Verificación de formato.
-  - `cargo clippy`: Linter estático.
+- All code must compile against the **latest stable** Rust toolchain.
+- Use standard Cargo commands:
+  - `cargo check`: Fast syntax/type check.
+  - `cargo run`: Run binaries / examples.
+  - `cargo test`: Run tests.
+  - `cargo fmt --check`: Check formatting.
+  - `cargo clippy`: Static linter.
 
 ---
 
-## 4. Sugerencias de Reglas, Hooks y Mejoras Futuras
+## 5. Suggested Rules, Hooks, and Future Workflows
 
-Conforme el repositorio crezca, se recomienda considerar las siguientes configuraciones:
+As the repository matures, consider the following configurations:
 
-### A. Git Pre-commit Hooks (Vía `.git/hooks/pre-commit` o `pre-commit`)
-Un hook para verificar antes de cada commit que ambos ambientes se mantienen sanos y formateados:
-1. **Python:** Formateo y linting rápido (ej. `uv run ruff check` y `uv run ruff format --check` cuando se autorice ruff).
-2. **Rust:** `cargo fmt --check` y `cargo clippy -- -D warnings`.
-3. **No git commit si alguno de los dos ambientes falla la compilación o tests.**
+### A. Git Pre-commit Hooks (Via `.git/hooks/pre-commit` or `pre-commit`)
+A hook to ensure both environments remain healthy, linted, and formatted before committing:
+1. **Python:** Fast linting and format checking (e.g., `uv run ruff check` and `uv run ruff format --check` once approved).
+2. **Rust:** `cargo fmt --check` and `cargo clippy -- -D warnings`.
+3. **Reject commits if either environment fails compilation or tests.**
 
 ### B. CI / GitHub Actions
-Un flujo en `.github/workflows/ci.yml` con dos matrices de jobs paralelas:
-- **Job Python:** `uv sync` + `uv run pytest`.
-- **Job Rust:** `cargo test` + `cargo clippy`.
+A workflow in `.github/workflows/ci.yml` running parallel matrix jobs:
+- **Python Job:** `uv sync` + `uv run pytest`.
+- **Rust Job:** `cargo test` + `cargo clippy`.
 
-### C. Paridad Numérica en Pruebas
-Generar archivos de datos canónicos (en formato CSV o JSON) para que los tests de Rust y Python consuman exactamente los mismos datos de entrada y validen que las estimaciones causales coincidan con una tolerancia $\epsilon < 10^{-6}$.
+### C. Numerical Parity Testing
+Generate canonical benchmark datasets (in CSV or JSON format) consumed by both Rust and Python tests to verify that causal estimates match within a numerical tolerance of $\epsilon < 10^{-6}$.
