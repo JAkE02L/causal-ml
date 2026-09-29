@@ -11,3 +11,7 @@ rand = "0.10.3"
 [[bin]]
 name = "unbiased_estimators"
 path = "error/estimation_error/unbiased_estimators.rs"
+
+[[bin]]
+name = "prediction_error"
+path = "error/prediction_error/prediction_error.rs"
