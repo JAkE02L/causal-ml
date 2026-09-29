@@ -18,6 +18,30 @@ def main() -> None:
     print("Correlation matrix:")
     print(corr_matrix)
 
+    # --- Estimator 1: Sample Mean ---
+    est1 = np.mean(samples, axis=0)
+    est1_mean = np.mean(est1)
+
+    # --- Estimator 2: 0.5 * first person + 0.5 * last person ---
+    est2 = 0.5 * samples[0, :] + 0.5 * samples[-1, :]
+    est2_mean = np.mean(est2)
+
+    # --- Estimator 3: 0.25 * first person + 0.75 * last person ---
+    est3 = 0.25 * samples[0, :] + 0.75 * samples[-1, :]
+    est3_mean = np.mean(est3)
+
+    print("\nEstimator 1 (Sample Mean):")
+    print("  Estimates across samples:", np.round(est1, 2))
+    print(f"  Overall average: {est1_mean:.2f}")
+
+    print("\nEstimator 2 (0.5 * First + 0.5 * Last):")
+    print("  Estimates across samples:", np.round(est2, 2))
+    print(f"  Overall average: {est2_mean:.2f}")
+
+    print("\nEstimator 3 (0.25 * First + 0.75 * Last):")
+    print("  Estimates across samples:", np.round(est3, 2))
+    print(f"  Overall average: {est3_mean:.2f}")
+
 
 if __name__ == "__main__":
     main()

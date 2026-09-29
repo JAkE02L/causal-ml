@@ -102,4 +102,51 @@ fn main() {
         let row_vec: Vec<f64> = row.to_vec();
         println!("{row_vec:?}");
     }
+
+    // --- 3 Estimators of Population Parameter ---
+    let mut est1 = Vec::with_capacity(num_cols);
+    let mut est2 = Vec::with_capacity(num_cols);
+    let mut est3 = Vec::with_capacity(num_cols);
+
+    for col in 0..num_cols {
+        // Estimator 1: Sample mean
+        let sum: f64 = samples.iter().map(|row| f64::from(row[col])).sum();
+        let e1 = sum / (num_rows as f64);
+        est1.push((e1 * 100.0).round() / 100.0);
+
+        // Estimator 2: 0.5 * first person + 0.5 * last person
+        let first = f64::from(samples[0][col]);
+        let last = f64::from(samples[num_rows - 1][col]);
+        let e2 = 0.5 * first + 0.5 * last;
+        est2.push((e2 * 100.0).round() / 100.0);
+
+        // Estimator 3: 0.25 * first person + 0.75 * last person
+        let e3 = 0.25 * first + 0.75 * last;
+        est3.push((e3 * 100.0).round() / 100.0);
+    }
+
+    let est1_mean = est1.iter().sum::<f64>() / (num_cols as f64);
+    let est2_mean = est2.iter().sum::<f64>() / (num_cols as f64);
+    let est3_mean = est3.iter().sum::<f64>() / (num_cols as f64);
+
+    println!("\nEstimator 1 (Sample Mean):");
+    println!("  Estimates across samples: {est1:?}");
+    println!(
+        "  Overall average: {:.2}",
+        (est1_mean * 100.0).round() / 100.0
+    );
+
+    println!("\nEstimator 2 (0.5 * First + 0.5 * Last):");
+    println!("  Estimates across samples: {est2:?}");
+    println!(
+        "  Overall average: {:.2}",
+        (est2_mean * 100.0).round() / 100.0
+    );
+
+    println!("\nEstimator 3 (0.25 * First + 0.75 * Last):");
+    println!("  Estimates across samples: {est3:?}");
+    println!(
+        "  Overall average: {:.2}",
+        (est3_mean * 100.0).round() / 100.0
+    );
 }
