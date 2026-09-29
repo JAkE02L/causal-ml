@@ -17,4 +17,26 @@ fn main() {
     for row in samples.iter().take(6) {
         println!("{row:?}");
     }
+
+    let mut means = Vec::with_capacity(num_cols);
+    let mut variances = Vec::with_capacity(num_cols);
+
+    for col in 0..num_cols {
+        let sum: f64 = samples.iter().map(|row| f64::from(row[col])).sum();
+        let mean = sum / (num_rows as f64);
+        let var: f64 = samples
+            .iter()
+            .map(|row| {
+                let diff = f64::from(row[col]) - mean;
+                diff * diff
+            })
+            .sum::<f64>()
+            / ((num_rows - 1) as f64);
+
+        means.push((mean * 100.0).round() / 100.0);
+        variances.push((var * 100.0).round() / 100.0);
+    }
+
+    println!("Sample means: {means:?}");
+    println!("Sample variances: {variances:?}");
 }

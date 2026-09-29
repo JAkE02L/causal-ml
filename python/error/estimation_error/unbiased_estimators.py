@@ -8,6 +8,12 @@ def main() -> None:
 
     print(samples[:6])
 
+    means = np.round(np.mean(samples, axis=0), 2)
+    variances = np.round(np.var(samples, axis=0, ddof=1), 2)
+
+    print("Sample means:", means)
+    print("Sample variances:", variances)
+
 
 if __name__ == "__main__":
     main()
