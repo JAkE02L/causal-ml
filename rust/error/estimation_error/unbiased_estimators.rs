@@ -131,12 +131,22 @@ fn main() {
     let est2_mean = est2.iter().sum::<f64>() / (num_cols as f64);
     let est3_mean = est3.iter().sum::<f64>() / (num_cols as f64);
 
+    let calc_var = |vals: &[f64], mean: f64| -> f64 {
+        let sum_sq: f64 = vals.iter().map(|&x| (x - mean) * (x - mean)).sum();
+        sum_sq / ((vals.len() - 1) as f64)
+    };
+
+    let est1_var = calc_var(&est1, est1_mean);
+    let est2_var = calc_var(&est2, est2_mean);
+    let est3_var = calc_var(&est3, est3_mean);
+
     println!("\nEstimator 1 (Sample Mean):");
     println!("  Estimates across samples: {est1:?}");
     println!(
         "  Overall average: {:.2}",
         (est1_mean * 100.0).round() / 100.0
     );
+    println!("  Variance: {est1_var:.4}");
 
     println!("\nEstimator 2 (0.5 * First + 0.5 * Last):");
     println!("  Estimates across samples: {est2:?}");
@@ -144,6 +154,7 @@ fn main() {
         "  Overall average: {:.2}",
         (est2_mean * 100.0).round() / 100.0
     );
+    println!("  Variance: {est2_var:.4}");
 
     println!("\nEstimator 3 (0.25 * First + 0.75 * Last):");
     println!("  Estimates across samples: {est3:?}");
@@ -151,4 +162,5 @@ fn main() {
         "  Overall average: {:.2}",
         (est3_mean * 100.0).round() / 100.0
     );
+    println!("  Variance: {est3_var:.4}");
 }
