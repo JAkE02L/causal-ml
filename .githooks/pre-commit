@@ -1,0 +1,12 @@
+#!/bin/sh
+set -e
+
+echo "=== [Pre-commit] Checking Python (Ruff lint & format) ==="
+uvx ruff check python/
+uvx ruff format --check python/
+
+echo "=== [Pre-commit] Checking Rust (cargo fmt & clippy) ==="
+cargo fmt --check --manifest-path rust/Cargo.toml
+cargo clippy --manifest-path rust/Cargo.toml -- -D warnings
+
+echo "=== [Pre-commit] All formatting and linting checks passed! ==="

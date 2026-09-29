@@ -86,10 +86,9 @@ Execute all commands inside the `rust/` directory:
 
 ---
 
-## 4. Dependency Policy
+## 4. Dependencies
 
-To keep the project clean, lightweight, and reproducible, **no external crates should be added to `Cargo.toml`** unless explicitly requested.
-When a new crate is needed and authorized, add it via:
+Dependencies are managed in `Cargo.toml`. To add a new crate:
 ```bash
 cargo add <crate-name>
 ```

@@ -59,5 +59,3 @@ Execute all commands inside the `python/` directory (or specify `--directory pyt
 ## 4. Current Dependencies
 
 - `numpy` (>= 2.5.3)
-
-*Note: No additional dependencies may be installed without explicit approval.*
