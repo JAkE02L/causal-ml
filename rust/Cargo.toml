@@ -6,7 +6,9 @@ edition = "2024"
 [dependencies]
 ndarray = "0.17.2"
 ndarray-stats = "0.7.0"
+polyfit-rs = "0.2.2"
 rand = "0.10.3"
+rand_distr = "0.6.0"
 
 [[bin]]
 name = "unbiased_estimators"
