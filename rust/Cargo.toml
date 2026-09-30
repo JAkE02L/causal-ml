@@ -15,3 +15,7 @@ path = "error/estimation_error/unbiased_estimators.rs"
 [[bin]]
 name = "prediction_error"
 path = "error/prediction_error/prediction_error.rs"
+
+[[bin]]
+name = "polynomial_error"
+path = "error/prediction_error/polynomial_error.rs"
